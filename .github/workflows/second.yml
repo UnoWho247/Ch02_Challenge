@@ -1,0 +1,41 @@
+name: second
+  
+on: push
+
+jobs:
+  job1:
+    name: Ubuntu date
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1-checkout
+        uses: actions/checkout@v2
+      - name: 2-getdate
+        run: date '+%F %T'
+  job2:
+    name: Windows date
+    runs-on: windows-latest
+    steps:
+      - name: 1-checkout
+        uses: actions/checkout@v2
+      - name: 2-getdate
+        run: Get-Date -format 'yyyy-MM-dd HH:mm:ss'
+  job3:
+    name: MacOS date
+    runs-on: macos-latest
+    steps:
+      - name: 1-checkout
+        uses: actions/checkout@v2
+      - name: 2-getdate
+        run: date '+%F %T'     
+job4:
+    name: Python date
+    runs-on: python3-latest
+    needs: [job1, job2, job3]
+    steps:
+      - name: 1-checkout
+        uses: actions/checkout@v2
+      - name: 2-getdate
+        run: |
+          from datetime import datetime
+          today = datetime.now()
+          print(today.strftime("%F %T"))
